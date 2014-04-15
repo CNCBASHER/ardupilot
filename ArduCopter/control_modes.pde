@@ -112,9 +112,11 @@ static void init_aux_switches()
         case AUX_SWITCH_EKF:
         case AUX_SWITCH_PARACHUTE_ENABLE:
         case AUX_SWITCH_PARACHUTE_3POS:	    // we trust the vehicle will be disarmed so even if switch is in release position the chute will not release
+        case AUX_SWITCH_AUTOPAUSE_3POS:
             do_aux_switch_function(g.ch7_option, ap.CH7_flag);
             break;
     }
+
     // init channel 8 option
     switch(g.ch8_option) {
         case AUX_SWITCH_SIMPLE_MODE:
@@ -128,6 +130,7 @@ static void init_aux_switches()
         case AUX_SWITCH_EKF:
         case AUX_SWITCH_PARACHUTE_ENABLE:
         case AUX_SWITCH_PARACHUTE_3POS:     // we trust the vehicle will be disarmed so even if switch is in release position the chute will not release
+        case AUX_SWITCH_AUTOPAUSE_3POS:
             do_aux_switch_function(g.ch8_option, ap.CH8_flag);
             break;
     }
@@ -396,9 +399,34 @@ static void do_aux_switch_function(int8_t ch_function, uint8_t ch_flag)
             case AUX_SWITCH_HIGH:
                 parachute.enabled(true);
                 parachute_manual_release();
+                Log_Write_Event(DATA_PARACHUTE_RELEASED);
                 break;
         }
+        break;
 #endif
+
+    case AUX_SWITCH_AUTOPAUSE_3POS:
+        switch (ch_flag) {
+            case AUX_SWITCH_LOW:
+                if ((control_mode == AUTO) && (mission.state() == AP_Mission::MISSION_STOPPED)) {
+                    mission.resume();
+                    //Log_Write_Event(DATA_MISSION_RESUMED);
+                }
+                break;
+            case AUX_SWITCH_MIDDLE:
+                if (control_mode == AUTO) {
+                    mission.start();
+                    //Log_Write_Event(DATA_MISSION_RESTARTED);
+                }
+                break;
+            case AUX_SWITCH_HIGH:
+                if (control_mode == AUTO) {
+                    mission.stop();
+                    //Log_Write_Event(DATA_MISSION_PAUSED);
+                }
+                break;
+        }
+        break;
     }
 }
 
