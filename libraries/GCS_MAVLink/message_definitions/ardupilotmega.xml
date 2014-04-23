@@ -170,6 +170,21 @@
         </entry>
     </enum>
 
+    <!-- Camera event types -->
+    <enum name="CAMERA_EVENT_TYPES">
+    	<entry name="trigger"  value="1"><description>Camera trigger</description></entry>
+    	<entry name="fail"     value="2"><description>Camera connection lost</description></entry>
+    	<entry name="lowbatt"  value="3"><description>Camera battery low. Parameter p1 shows reported voltage</description></entry>
+    	<entry name="lowstore" value="4"><description>Camera storage low. Parameter p1 shows reported shots or time remaining</description></entry>
+	</enum>
+
+    <!-- camera feedback flags: just an attempt to future-proof -->
+    <enum name="CAMERA_FEEDBACK_FLAGS">
+		<entry name="VIDEO" value="1"> <description>Camera is shooting video, not stills</description></entry>
+		<entry name="" value="2"> <description></description></entry>
+		<entry name="" value="3"> <description></description></entry>
+	</enum>
+
       </enums>
 
      <messages>
@@ -481,5 +496,62 @@
             <field type="int32_t" name="lat">Latitude in degrees * 1E7</field>
             <field type="int32_t" name="lng">Longitude in degrees * 1E7</field>
 	  </message>
+
+	  <!-- message from CCB to autopilot: mainly for trigger events, but could also be things like error, low power, full card, etc -->
+	  <message name="CAMERA_EVENT" id="179">
+	  	<description>Camera Event</description>
+	    <field name="time_usec" type="uint64_t">Image timestamp</field>    
+	    <field name="target_system" type="uint8_t" >System ID</field>   <!-- support multiple concurrent vehicles -->  
+	    <field name="cam_idx"   type="uint8_t" >Camera ID</field>       <!-- usually 0 for one cam, but we can support multiple -->
+	    <field name="event_id"  type="uint8_t" >See CAMERA_EVENT_TYPES enum for definition of the bitmask.</field>
+	    <field name="p1"        type="float"   >Parameter 1 (usage depends on event)</field>
+	    <field name="p2"        type="float"   >Parameter 2 (usage depends on event)</field>
+	    <field name="p3"        type="float"   >Parameter 3 (usage depends on event)</field>
+	    <field name="p4"        type="float"   >Parameter 4 (usage depends on event)</field>
+	  </message>
+
+	  <!-- message from autopilot to both CCB and GCS, in response to a camera trigger event -->
+      <message name="CAMERA_FEEDBACK" id="180">
+	    <description>Camera Capture Feedback</description>
+	    <field name="time_usec" type="uint64_t">Image timestamp</field> <!-- msec since UNIX epoch or msec since system boot -->
+	    <field name="target_system" type="uint8_t" >System ID</field>   <!-- support multiple concurrent vehicles -->  
+	  	<field name="cam_idx"   type="uint8_t" >Camera ID</field>       <!-- usually 0 for one cam, but we can support multiple -->
+	    <field name="img_idx"   type="uint8_t" >Image index</field>     <!-- per camera image index, unique+sequential within a mission -->
+        <field type="int32_t"   name="lat"     >Latitude in (deg * 1E7)</field>
+        <field type="int32_t"   name="lng"     >Longitude in (deg * 1E7)</field>
+	    <field name="alt"       type="float"   >Altitude</field>                 <!-- In meters. ASL or above home? -->
+        <field name="roll"      type="float"   >Roll angle (degrees)</field>     <!-- deg or rad? of the vehicle or vehicle+gimbal -->
+        <field name="pitch"     type="float"   >Pitch angle (degrees)</field>    <!-- deg or rad? of the vehicle or vehicle+gimbal -->
+        <field name="heading"   type="float"   >Heading (degrees)</field>        <!-- magnetic or true? of the vehicle or gimbal -->
+        <field name="foc_len"   type="float"   >Focal Length (mm)</field>        <!-- for zooms. Zero means fixed length as per cam info -->
+        <field name="flags" type="uint8_t">See CAMERA_FEEDBACK_FLAGS enum for definition of the bitmask.</field> <!-- future proofing -->
+	  </message>
+
+	  <!-- message requesting CCB to interrogate the camera for info, sensor size, res, etc. Needs to be passed from GCS->autopilot->CCB -->
+	  <message name="CAMERA_INFO_REQUEST" id="181">
+	  	<description>Camera Info request</description>
+	    <field name="target_system" type="uint8_t" >System ID</field>    <!-- support multiple concurrent vehicles -->  
+	  	<field name="cam_idx"       type="uint8_t" >Camera ID</field>    <!-- usually 0 for one cam, but we can support multiple -->
+	  	<field name="info_type" type="uint8_t" >Info type: use 0 for basic info, higher numbers for future camera info reports</field>
+	  </message>
+
+	  <!-- camera info response message, from CCB->autopilot->GCS, it can be expanded to CAMERA_INFO_1, CAMERA_INFO_2, etc if necessary -->
+	  <message name="CAMERA_INFO_0" id="182">
+	  	<description>Camera Info report 0</description>
+	    <field name="target_system" type="uint8_t" >System ID</field>
+	  	<field name="cam_idx"       type="uint8_t" >Camera ID</field>
+		<field name="sens_width"    type="float"   >Sensor width (mm)</field>
+		<field name="sens_height"   type="float"   >Sensor height (mm)</field>
+		<field name="focal_min"     type="uint16_t">Min lens focal length (mm)</field> <!-- min == max on a prime lens -->
+		<field name="focal_max"     type="uint16_t">Max lens focal length (mm)</field> <!-- min == max on a prime lens -->
+		<field name="res_x"         type="uint16_t">Current image resolution width (pixels)</field>
+		<field name="res_Y"         type="uint16_t">Current image resolution height (pixels)</field>
+		<field name="store_remain1" type="uint16_t">Shots remaining (jpg), or minutes remaining for video</field> 
+		<field name="store_remain2" type="uint16_t">Shots remaining (raw), or minutes remaining for video</field>
+		<field name="time_cam"      type="uint64_t">Camera clock time</field>
+	  	<field name="time_gps"      type="uint64_t">GPS time</field> 
+	  </message>
+
+
      </messages>
 </mavlink>
