@@ -614,6 +614,12 @@ static void NOINLINE send_wind(mavlink_channel_t chan)
         wind.z);
 }
 
+static void NOINLINE send_camera_feedback(mavlink_channel_t chan)
+{
+
+    
+}
+
 static void NOINLINE send_rangefinder(mavlink_channel_t chan)
 {
     if (!sonar.enabled()) {
@@ -809,6 +815,11 @@ bool GCS_MAVLINK::try_send_message(enum ap_message id)
     case MSG_WIND:
         CHECK_PAYLOAD_SIZE(WIND);
         send_wind(chan);
+        break;
+
+    case MSG_CAMERA_FEEDBACK:
+        CHECK_PAYLOAD_SIZE(CAMERA_FEEDBACK);
+        send_camera_feedback(chan);
         break;
 
     case MSG_RETRY_DEFERRED:

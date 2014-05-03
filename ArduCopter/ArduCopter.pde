@@ -684,7 +684,7 @@ static AP_ServoRelayEvents ServoRelayEvents(relay);
 
 //Reference to the camera object (it uses the relay object inside it)
 #if CAMERA == ENABLED
-  static AP_Camera camera(&relay);
+  static AP_Camera camera(&relay, gcs_send_message);
 #endif
 
 // a pin for reading the receiver RSSI voltage.

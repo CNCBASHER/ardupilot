@@ -10,6 +10,7 @@
 #include <AP_Common.h>
 #include <GCS_MAVLink.h>
 #include <AP_Relay.h>
+#include <GCS.h>
 
 #define AP_CAMERA_TRIGGER_TYPE_SERVO                0
 #define AP_CAMERA_TRIGGER_TYPE_RELAY                1
@@ -26,10 +27,14 @@
 class AP_Camera {
 
 public:
+    //for the hacky funciton pointer to gcs_send_message
+    typedef void (*gcs_message_t_p)(enum ap_message message_id);
+
     /// Constructor
     ///
-    AP_Camera(AP_Relay *obj_relay) :
-        _trigger_counter(0)             // count of number of cycles shutter has been held open
+    AP_Camera(AP_Relay *obj_relay, gcs_message_t_p gcs_message_P)
+      : _trigger_counter(0)             // count of number of cycles shutter has been held open
+      , _gcs_message_P(gcs_message_P)
     {
 		AP_Param::setup_object_defaults(this, var_info);
         _apm_relay = obj_relay;
@@ -45,6 +50,7 @@ public:
     // MAVLink methods
     void            configure_msg(mavlink_message_t* msg);
     void            control_msg(mavlink_message_t* msg);
+    void            send_camera_feedback_msg();
 
     // set camera trigger distance in a mission
     void            set_trigger_distance(uint32_t distance_m) { _trigg_dist.set(distance_m); }
@@ -67,6 +73,8 @@ private:
 
     AP_Float        _trigg_dist;     // distance between trigger points (meters)
     struct Location _last_location;
+
+    gcs_message_t_p _gcs_message_P;  // TEMP
 
 };
 

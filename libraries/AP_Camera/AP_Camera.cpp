@@ -5,8 +5,13 @@
 #include <AP_Math.h>
 #include <RC_Channel.h>
 #include <AP_HAL.h>
+#include <GCS.h>
 
 extern const AP_HAL::HAL& hal;
+//extern 
+
+#include <stdio.h> // ####### TEMP!!!!!!!
+
 
 // ------------------------------
 #define CAM_DEBUG DISABLED
@@ -84,6 +89,7 @@ AP_Camera::trigger_pic()
         relay_pic();                    // basic relay activation
         break;
     }
+    send_camera_feedback_msg();
 }
 
 /// de-activate the trigger after some delay, but without using a delay() function
@@ -158,6 +164,15 @@ AP_Camera::control_msg(mavlink_message_t* msg)
     }
 }
 
+/// send a Mavlink camera feedback message back to the GCS
+void AP_Camera::send_camera_feedback_msg()
+{
+    // we need to put it in a queue to be prioritized and sent at the right time in the processing loop I guess?
+    // ...
+    printf("AP_Camera::send_camera_feedback_msg()\n");
+
+    _gcs_message_P(MSG_CAMERA_FEEDBACK);
+}
 
 /*  update location, for triggering by GPS distance moved
     This function returns true if a picture should be taken

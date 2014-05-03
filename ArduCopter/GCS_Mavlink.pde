@@ -753,6 +753,11 @@ bool GCS_MAVLINK::try_send_message(enum ap_message id)
         // unused
         break;
 
+    case MSG_CAMERA_FEEDBACK:
+        CHECK_PAYLOAD_SIZE(CAMERA_FEEDBACK);
+        send_camera_feedback(chan);
+        break;
+
     case MSG_RETRY_DEFERRED:
         break; // just here to prevent a warning
     }
@@ -1628,3 +1633,27 @@ void gcs_send_text_fmt(const prog_char_t *fmt, ...)
         }
     }
 }
+
+static void NOINLINE send_camera_feedback(mavlink_channel_t chan)
+{
+    static uint16_t img_idx = 0; // temp - should be stored somewhere else, resettable
+    uint8_t cam_idx = 0; // temp        
+
+    mavlink_msg_camera_feedback_send(chan, cam_idx, img_idx, 10000, current_loc.lat, current_loc.lng, 44.2, 1.2, -2.9, 135.0, 35.0);
+
+    img_idx++;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
