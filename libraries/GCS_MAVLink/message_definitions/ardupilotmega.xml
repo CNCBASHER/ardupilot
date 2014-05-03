@@ -9,18 +9,19 @@
       is general enough to move into common.xml later
     -->
 
-    <enums>
+  <enums>
       <!-- Camera Mount mode Enumeration -->
       <enum name="MAV_MOUNT_MODE">
-        <description>Enumeration of possible mount operation modes</description>
-        <entry name="MAV_MOUNT_MODE_RETRACT" value="0"><description>Load and keep safe position (Roll,Pitch,Yaw) from EEPROM and stop stabilization</description></entry>
-        <entry name="MAV_MOUNT_MODE_NEUTRAL" value="1"><description>Load and keep neutral position (Roll,Pitch,Yaw) from EEPROM.</description></entry>
-        <entry name="MAV_MOUNT_MODE_MAVLINK_TARGETING" value="2"><description>Load neutral position and start MAVLink Roll,Pitch,Yaw control with stabilization</description></entry>
-        <entry name="MAV_MOUNT_MODE_RC_TARGETING" value="3"><description>Load neutral position and start RC Roll,Pitch,Yaw control with stabilization</description></entry>
-        <entry name="MAV_MOUNT_MODE_GPS_POINT" value="4"><description>Load neutral position and start to point to Lat,Lon,Alt</description></entry>
+          <description>Enumeration of possible mount operation modes</description>
+          <entry name="MAV_MOUNT_MODE_RETRACT" value="0"><description>Load and keep safe position (Roll,Pitch,Yaw) from EEPROM and stop stabilization</description></entry>
+          <entry name="MAV_MOUNT_MODE_NEUTRAL" value="1"><description>Load and keep neutral position (Roll,Pitch,Yaw) from EEPROM.</description></entry>
+          <entry name="MAV_MOUNT_MODE_MAVLINK_TARGETING" value="2"><description>Load neutral position and start MAVLink Roll,Pitch,Yaw control with stabilization</description></entry>
+          <entry name="MAV_MOUNT_MODE_RC_TARGETING" value="3"><description>Load neutral position and start RC Roll,Pitch,Yaw control with stabilization</description></entry>
+          <entry name="MAV_MOUNT_MODE_GPS_POINT" value="4"><description>Load neutral position and start to point to Lat,Lon,Alt</description></entry>
       </enum>
 
       <enum name="MAV_CMD" >
+
         <!-- Camera Controller Mission Commands Enumeration -->
         <entry name="MAV_CMD_DO_DIGICAM_CONFIGURE" value="202">
           <description>Mission command to configure an on-board camera controller system.</description>
@@ -31,9 +32,9 @@
           <param index="5">Exposure type enumerator</param>
           <param index="6">Command Identity</param>
           <param index="7">Main engine cut-off time before camera trigger in seconds/10 (0 means no cut-off)</param>
-        </entry>
-        
-        <entry name="MAV_CMD_DO_DIGICAM_CONTROL" value="203">
+      </entry>
+      
+      <entry name="MAV_CMD_DO_DIGICAM_CONTROL" value="203">
           <description>Mission command to control an on-board camera controller system.</description>
           <param index="1">Session control e.g. show/hide lens</param>
           <param index="2">Zoom's absolute position</param>
@@ -42,10 +43,10 @@
           <param index="5">Shooting Command</param>
           <param index="6">Command Identity</param>
           <param index="7">Empty</param>
-        </entry>
-        
-        <!-- Camera Mount Mission Commands Enumeration -->
-        <entry name="MAV_CMD_DO_MOUNT_CONFIGURE" value="204">
+      </entry>
+      
+      <!-- Camera Mount Mission Commands Enumeration -->
+      <entry name="MAV_CMD_DO_MOUNT_CONFIGURE" value="204">
           <description>Mission command to configure a camera or antenna mount</description>
           <param index="1">Mount operation mode (see MAV_MOUNT_MODE enum)</param>
           <param index="2">stabilize roll? (1 = yes, 0 = no)</param>
@@ -54,9 +55,9 @@
           <param index="5">Empty</param>
           <param index="6">Empty</param>
           <param index="7">Empty</param>
-        </entry>
-    
-        <entry name="MAV_CMD_DO_MOUNT_CONTROL" value="205">
+      </entry>
+  
+      <entry name="MAV_CMD_DO_MOUNT_CONTROL" value="205">
           <description>Mission command to control a camera or antenna mount</description>
           <param index="1">pitch(deg*100) or lat, depending on mount mode.</param>
           <param index="2">roll(deg*100) or lon depending on mount mode</param>
@@ -65,9 +66,9 @@
           <param index="5">Empty</param>
           <param index="6">Empty</param>
           <param index="7">Empty</param>
-        </entry>
+      </entry>
 
-        <entry name="MAV_CMD_DO_SET_CAM_TRIGG_DIST" value="206">
+      <entry name="MAV_CMD_DO_SET_CAM_TRIGG_DIST" value="206">
           <description>Mission command to set CAM_TRIGG_DIST for this flight</description>
           <param index="1">Camera trigger distance (meters)</param>
           <param index="2">Empty</param>
@@ -113,17 +114,17 @@
 
     </enum>
 
-	  <!-- fenced mode enums -->
-	  <enum name="FENCE_ACTION">
-	    <entry name="FENCE_ACTION_NONE" value="0">
-	      <description>Disable fenced mode</description>
-	    </entry>
-	    <entry name="FENCE_ACTION_GUIDED" value="1">
-	      <description>Switched to guided mode to return point (fence point 0)</description>
-	    </entry>
-	    <entry name="FENCE_ACTION_REPORT" value="2">
-	      <description>Report fence breach, but don't take action</description>
-	    </entry>
+    <!-- fenced mode enums -->
+    <enum name="FENCE_ACTION">
+      <entry name="FENCE_ACTION_NONE" value="0">
+        <description>Disable fenced mode</description>
+      </entry>
+      <entry name="FENCE_ACTION_GUIDED" value="1">
+        <description>Switched to guided mode to return point (fence point 0)</description>
+      </entry>
+      <entry name="FENCE_ACTION_REPORT" value="2">
+        <description>Report fence breach, but don't take action</description>
+      </entry>
 
       <entry name="FENCE_ACTION_GUIDED_THR_PASS" value="3">
         <description>Switched to guided mode to return point (fence point 0) with manual throttle control</description>
@@ -163,10 +164,10 @@
     </enum>
 
     <!-- RALLY flags - power of 2 (1,2,4,8,16,32,64,128) so we can send as a bitfield -->
-        <enum name="RALLY_FLAGS">
-          <description>Flags in RALLY_POINT message</description>
-          <entry name="FAVORABLE_WIND" value="1"> <description>Flag set when requiring favorable winds for landing. </description></entry>
-          <entry name="LAND_IMMEDIATELY" value="2"> <description>Flag set when plane is to immediately descend to break altitude and land without GCS intervention.  Flag not set when plane is to loiter at Rally point until commanded to land.</description></entry>
+    <enum name="RALLY_FLAGS">
+        <description>Flags in RALLY_POINT message</description>
+        <entry name="FAVORABLE_WIND" value="1"> <description>Flag set when requiring favorable winds for landing. </description></entry>
+        <entry name="LAND_IMMEDIATELY" value="2"> <description>Flag set when plane is to immediately descend to break altitude and land without GCS intervention.  Flag not set when plane is to loiter at Rally point until commanded to land.</description></entry>
     </enum>
 
     <!-- parachute action enum -->
@@ -512,136 +513,70 @@
       </message>
 -->
 
-<<<<<<< HEAD
-      <message name="AHRS2" id="178">
-        <description>Status of secondary AHRS filter if available</description>
-        <field type="float" name="roll">Roll angle (rad)</field>
-        <field type="float" name="pitch">Pitch angle (rad)</field>
-        <field type="float" name="yaw">Yaw angle (rad)</field>
-        <field type="float" name="altitude">Altitude (MSL)</field>
-        <field type="int32_t" name="lat">Latitude in degrees * 1E7</field>
-        <field type="int32_t" name="lng">Longitude in degrees * 1E7</field>
-      </message>
+    <message name="AHRS2" id="178">
+      <description>Status of secondary AHRS filter if available</description>
+      <field type="float" name="roll">Roll angle (rad)</field>
+      <field type="float" name="pitch">Pitch angle (rad)</field>
+      <field type="float" name="yaw">Yaw angle (rad)</field>
+      <field type="float" name="altitude">Altitude (MSL)</field>
+      <field type="int32_t" name="lat">Latitude in degrees * 1E7</field>
+      <field type="int32_t" name="lng">Longitude in degrees * 1E7</field>
+    </message>
 
-      <!-- message from CCB to autopilot: mainly for trigger events, but could also be things like error, low power, full card, etc -->
-      <message name="CAMERA_EVENT" id="179">
-        <description>Camera Event</description>
-        <field name="time_usec" type="uint64_t">Image timestamp</field>    
-        <field name="target_system" type="uint8_t" >System ID</field>   <!-- support multiple concurrent vehicles -->  
-        <field name="cam_idx"   type="uint8_t" >Camera ID</field>       <!-- usually 0 for one cam, but we can support multiple -->
-        <field name="event_id"  type="uint8_t" >See CAMERA_EVENT_TYPES enum for definition of the bitmask.</field>
-        <field name="p1"        type="float"   >Parameter 1 (usage depends on event)</field>
-        <field name="p2"        type="float"   >Parameter 2 (usage depends on event)</field>
-        <field name="p3"        type="float"   >Parameter 3 (usage depends on event)</field>
-        <field name="p4"        type="float"   >Parameter 4 (usage depends on event)</field>
-      </message>
+    <!-- message from CCB to autopilot: mainly for trigger events, but could also be things like error, low power, full card, etc -->
+    <message name="CAMERA_EVENT" id="179">
+      <description>Camera Event</description>
+      <field name="time_usec" type="uint64_t">Image timestamp</field>    
+      <field name="target_system" type="uint8_t" >System ID</field>   <!-- support multiple concurrent vehicles -->  
+      <field name="cam_idx"   type="uint8_t" >Camera ID</field>       <!-- usually 0 for one cam, but we can support multiple -->
+      <field name="event_id"  type="uint8_t" >See CAMERA_EVENT_TYPES enum for definition of the bitmask.</field>
+      <field name="p1"        type="float"   >Parameter 1 (usage depends on event)</field>
+      <field name="p2"        type="float"   >Parameter 2 (usage depends on event)</field>
+      <field name="p3"        type="float"   >Parameter 3 (usage depends on event)</field>
+      <field name="p4"        type="float"   >Parameter 4 (usage depends on event)</field>
+    </message>
 
-      <!-- message from autopilot to both CCB and GCS, in response to a camera trigger event -->
-      <message name="CAMERA_FEEDBACK" id="180">
-        <description>Camera Capture Feedback</description>
-        <field name="time_usec" type="uint64_t">Image timestamp</field> <!-- msec since UNIX epoch or msec since system boot -->
-        <field name="target_system" type="uint8_t" >System ID</field>   <!-- support multiple concurrent vehicles -->  
-        <field name="cam_idx"   type="uint8_t" >Camera ID</field>       <!-- usually 0 for one cam, but we can support multiple -->
-        <field name="img_idx"   type="uint8_t" >Image index</field>     <!-- per camera image index, unique+sequential within a mission -->
-        <field type="int32_t"   name="lat"     >Latitude in (deg * 1E7)</field>
-        <field type="int32_t"   name="lng"     >Longitude in (deg * 1E7)</field>
-        <field name="alt"       type="float"   >Altitude</field>                 <!-- In meters. ASL or above home? -->
-=======
-	  <message name="AHRS2" id="178">
-	    <description>Status of secondary AHRS filter if available</description>
-            <field type="float" name="roll">Roll angle (rad)</field>
-            <field type="float" name="pitch">Pitch angle (rad)</field>
-            <field type="float" name="yaw">Yaw angle (rad)</field>
-            <field type="float" name="altitude">Altitude (MSL)</field>
-            <field type="int32_t" name="lat">Latitude in degrees * 1E7</field>
-            <field type="int32_t" name="lng">Longitude in degrees * 1E7</field>
-	  </message>
+    <!-- message from autopilot to both CCB and GCS, in response to a camera trigger event -->
+    <message name="CAMERA_FEEDBACK" id="180">
+      <description>Camera Capture Feedback</description>
+      <field name="time_usec" type="uint64_t">Image timestamp</field> <!-- msec since UNIX epoch or msec since system boot -->
+      <field name="target_system" type="uint8_t" >System ID</field>   <!-- support multiple concurrent vehicles -->  
+      <field name="cam_idx"   type="uint8_t" >Camera ID</field>       <!-- usually 0 for one cam, but we can support multiple -->
+      <field name="img_idx"   type="uint8_t" >Image index</field>     <!-- per camera image index, unique+sequential within a mission -->
+      <field type="int32_t"   name="lat"     >Latitude in (deg * 1E7)</field>
+      <field type="int32_t"   name="lng"     >Longitude in (deg * 1E7)</field>
+      <field name="alt"       type="float"   >Altitude</field>                 <!-- In meters. ASL or above home? -->
+      <field name="roll"      type="float"   >Roll angle (degrees)</field>     <!-- deg or rad? of the vehicle or vehicle+gimbal -->
+      <field name="pitch"     type="float"   >Pitch angle (degrees)</field>    <!-- deg or rad? of the vehicle or vehicle+gimbal -->
+      <field name="heading"   type="float"   >Heading (degrees)</field>        <!-- magnetic or true? of the vehicle or gimbal -->
+      <field name="foc_len"   type="float"   >Focal Length (mm)</field>        <!-- for zooms. Zero means fixed length as per cam info -->
+      <field name="flags" type="uint8_t">See CAMERA_FEEDBACK_FLAGS enum for definition of the bitmask.</field> <!-- future proofing -->
+    </message>
 
-	  <!-- message from CCB to autopilot: mainly for trigger events, but could also be things like error, low power, full card, etc -->
-	  <message name="CAMERA_EVENT" id="179">
-	  	<description>Camera Event</description>
-	    <field name="time_usec" type="uint64_t">Image timestamp</field>    
-	    <field name="target_system" type="uint8_t" >System ID</field>   <!-- support multiple concurrent vehicles -->  
-	    <field name="cam_idx"   type="uint8_t" >Camera ID</field>       <!-- usually 0 for one cam, but we can support multiple -->
-	    <field name="event_id"  type="uint8_t" >See CAMERA_EVENT_TYPES enum for definition of the bitmask.</field>
-	    <field name="p1"        type="float"   >Parameter 1 (usage depends on event)</field>
-	    <field name="p2"        type="float"   >Parameter 2 (usage depends on event)</field>
-	    <field name="p3"        type="float"   >Parameter 3 (usage depends on event)</field>
-	    <field name="p4"        type="float"   >Parameter 4 (usage depends on event)</field>
-	  </message>
+    <!-- message requesting CCB to interrogate the camera for info, sensor size, res, etc. Needs to be passed from GCS->autopilot->CCB -->
+    <message name="CAMERA_INFO_REQUEST" id="181">
+      <description>Camera Info request</description>
+      <field name="target_system" type="uint8_t" >System ID</field>    <!-- support multiple concurrent vehicles -->  
+      <field name="cam_idx"       type="uint8_t" >Camera ID</field>    <!-- usually 0 for one cam, but we can support multiple -->
+      <field name="info_type" type="uint8_t" >Info type: use 0 for basic info, higher numbers for future camera info reports</field>
+    </message>
 
-	  <!-- message from autopilot to both CCB and GCS, in response to a camera trigger event -->
-      <message name="CAMERA_FEEDBACK" id="180">
-	    <description>Camera Capture Feedback</description>
-	    <field name="time_usec" type="uint64_t">Image timestamp</field> <!-- msec since UNIX epoch or msec since system boot -->
-	    <field name="target_system" type="uint8_t" >System ID</field>   <!-- support multiple concurrent vehicles -->  
-	  	<field name="cam_idx"   type="uint8_t" >Camera ID</field>       <!-- usually 0 for one cam, but we can support multiple -->
-	    <field name="img_idx"   type="uint8_t" >Image index</field>     <!-- per camera image index, unique+sequential within a mission -->
-        <field type="int32_t"   name="lat"     >Latitude in (deg * 1E7)</field>
-        <field type="int32_t"   name="lng"     >Longitude in (deg * 1E7)</field>
-	    <field name="alt"       type="float"   >Altitude</field>                 <!-- In meters. ASL or above home? -->
->>>>>>> FETCH_HEAD
-        <field name="roll"      type="float"   >Roll angle (degrees)</field>     <!-- deg or rad? of the vehicle or vehicle+gimbal -->
-        <field name="pitch"     type="float"   >Pitch angle (degrees)</field>    <!-- deg or rad? of the vehicle or vehicle+gimbal -->
-        <field name="heading"   type="float"   >Heading (degrees)</field>        <!-- magnetic or true? of the vehicle or gimbal -->
-        <field name="foc_len"   type="float"   >Focal Length (mm)</field>        <!-- for zooms. Zero means fixed length as per cam info -->
-        <field name="flags" type="uint8_t">See CAMERA_FEEDBACK_FLAGS enum for definition of the bitmask.</field> <!-- future proofing -->
-<<<<<<< HEAD
-      </message>
+    <!-- camera info response message, from CCB->autopilot->GCS, it can be expanded to CAMERA_INFO_1, CAMERA_INFO_2, etc if necessary -->
+    <message name="CAMERA_INFO_0" id="182">
+      <description>Camera Info report 0</description>
+      <field name="target_system" type="uint8_t" >System ID</field>
+      <field name="cam_idx"       type="uint8_t" >Camera ID</field>
+      <field name="sens_width"    type="float"   >Sensor width (mm)</field>
+      <field name="sens_height"   type="float"   >Sensor height (mm)</field>
+      <field name="focal_min"     type="float"   >Min lens focal length (mm)</field> <!-- min == max on a prime lens -->
+      <field name="focal_max"     type="float"   >Max lens focal length (mm)</field> <!-- min == max on a prime lens -->
+      <field name="res_x"         type="uint16_t">Current image resolution width (pixels)</field>
+      <field name="res_Y"         type="uint16_t">Current image resolution height (pixels)</field>
+      <field name="store_remain1" type="uint16_t">Shots remaining (jpg), or minutes remaining for video</field> 
+      <field name="store_remain2" type="uint16_t">Shots remaining (raw), or minutes remaining for video</field>
+      <field name="time_cam"      type="uint64_t">Camera clock time</field>
+      <field name="time_gps"      type="uint64_t">GPS time</field> 
+    </message>
 
-      <!-- message requesting CCB to interrogate the camera for info, sensor size, res, etc. Needs to be passed from GCS->autopilot->CCB -->
-      <message name="CAMERA_INFO_REQUEST" id="181">
-        <description>Camera Info request</description>
-        <field name="target_system" type="uint8_t" >System ID</field>    <!-- support multiple concurrent vehicles -->  
-        <field name="cam_idx"       type="uint8_t" >Camera ID</field>    <!-- usually 0 for one cam, but we can support multiple -->
-        <field name="info_type" type="uint8_t" >Info type: use 0 for basic info, higher numbers for future camera info reports</field>
-      </message>
-
-      <!-- camera info response message, from CCB->autopilot->GCS, it can be expanded to CAMERA_INFO_1, CAMERA_INFO_2, etc if necessary -->
-      <message name="CAMERA_INFO_0" id="182">
-        <description>Camera Info report 0</description>
-        <field name="target_system" type="uint8_t" >System ID</field>
-        <field name="cam_idx"       type="uint8_t" >Camera ID</field>
-        <field name="sens_width"    type="float"   >Sensor width (mm)</field>
-        <field name="sens_height"   type="float"   >Sensor height (mm)</field>
-        <field name="focal_min"     type="float"   >Min lens focal length (mm)</field> <!-- min == max on a prime lens -->
-        <field name="focal_max"     type="float"   >Max lens focal length (mm)</field> <!-- min == max on a prime lens -->
-        <field name="res_x"         type="uint16_t">Current image resolution width (pixels)</field>
-        <field name="res_Y"         type="uint16_t">Current image resolution height (pixels)</field>
-        <field name="store_remain1" type="uint16_t">Shots remaining (jpg), or minutes remaining for video</field> 
-        <field name="store_remain2" type="uint16_t">Shots remaining (raw), or minutes remaining for video</field>
-        <field name="time_cam"      type="uint64_t">Camera clock time</field>
-        <field name="time_gps"      type="uint64_t">GPS time</field> 
-      </message>
-=======
-	  </message>
-
-	  <!-- message requesting CCB to interrogate the camera for info, sensor size, res, etc. Needs to be passed from GCS->autopilot->CCB -->
-	  <message name="CAMERA_INFO_REQUEST" id="181">
-	  	<description>Camera Info request</description>
-	    <field name="target_system" type="uint8_t" >System ID</field>    <!-- support multiple concurrent vehicles -->  
-	  	<field name="cam_idx"       type="uint8_t" >Camera ID</field>    <!-- usually 0 for one cam, but we can support multiple -->
-	  	<field name="info_type" type="uint8_t" >Info type: use 0 for basic info, higher numbers for future camera info reports</field>
-	  </message>
-
-	  <!-- camera info response message, from CCB->autopilot->GCS, it can be expanded to CAMERA_INFO_1, CAMERA_INFO_2, etc if necessary -->
-	  <message name="CAMERA_INFO_0" id="182">
-	  	<description>Camera Info report 0</description>
-	    <field name="target_system" type="uint8_t" >System ID</field>
-	  	<field name="cam_idx"       type="uint8_t" >Camera ID</field>
-		<field name="sens_width"    type="float"   >Sensor width (mm)</field>
-		<field name="sens_height"   type="float"   >Sensor height (mm)</field>
-		<field name="focal_min"     type="uint16_t">Min lens focal length (mm)</field> <!-- min == max on a prime lens -->
-		<field name="focal_max"     type="uint16_t">Max lens focal length (mm)</field> <!-- min == max on a prime lens -->
-		<field name="res_x"         type="uint16_t">Current image resolution width (pixels)</field>
-		<field name="res_Y"         type="uint16_t">Current image resolution height (pixels)</field>
-		<field name="store_remain1" type="uint16_t">Shots remaining (jpg), or minutes remaining for video</field> 
-		<field name="store_remain2" type="uint16_t">Shots remaining (raw), or minutes remaining for video</field>
-		<field name="time_cam"      type="uint64_t">Camera clock time</field>
-	  	<field name="time_gps"      type="uint64_t">GPS time</field> 
-	  </message>
-
->>>>>>> FETCH_HEAD
-
-     </messages>
+  </messages>
 </mavlink>
